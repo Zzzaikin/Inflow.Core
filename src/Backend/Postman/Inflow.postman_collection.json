@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "78f46976-6880-4abe-bc7a-4bf4f28d54b1",
+		"name": "Inflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21529140"
+	},
+	"item": [
+		{
+			"name": "DataService",
+			"item": [
+				{
+					"name": "SimpleSelect-AllColumns",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnNames\": [\r\n        \"*\"\r\n    ],\r\n    \"entityName\": \"Customers\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SimpleSelect-SomeColumns",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnNames\": [\r\n        \"Address\",\r\n        \"CustomerID\"\r\n    ],\r\n    \"entityName\": \"Customers\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SelectAllColumns-WhereEquals",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnNames\": [\r\n        \"*\"\r\n    ],\r\n    \"entityName\": \"Products\",\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"UnitPrice\",\r\n                    \"value\": \"19.00\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SelectSomeColumns-WhereEquals",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnNames\": [\r\n        \"ProductID\",\r\n        \"ProductName\",\r\n        \"UnitsOnOrder\"\r\n    ],\r\n    \"entityName\": \"Products\",\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"ProductID\",\r\n                    \"value\": \"5\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SelectAllColumns-ManyEqualsWhere's",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnNames\": [\r\n        \"*\"\r\n    ],\r\n    \"entityName\": \"Products\",\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"UnitPrice\",\r\n                    \"value\": \"19.00\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"conditionalOperator\": 1,\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"UnitPrice\",\r\n                    \"value\": \"18.00\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SelectSomeColumns-Join",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnNames\": [\r\n        \"Products.ProductID\",\r\n        \"Order Details.ProductID\",\r\n        \"ProductName\",\r\n        \"UnitsOnOrder\"\r\n    ],\r\n    \"entityName\": \"Products\",\r\n    \"joins\": [\r\n        {\r\n            \"joinedEntityName\": \"Order Details\",\r\n            \"rightColumnName\": \"Products.ProductID\",\r\n            \"leftColumnName\": \"Order Details.ProductID\",\r\n            \"type\": 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertOneRecordWithGuidId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityName\": \"TestTable\",\r\n    \"InsertingData\": \r\n    [\r\n        {\r\n            \"Name\": \"TestName\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Insert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertManyRecordWithGuidId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityName\": \"TestTable\",\r\n    \"InsertingData\": \r\n    [\r\n        {\r\n            \"Name\": \"TestName8\",\r\n            \"Number\": \"5\",\r\n            \"IsSomething\": \"true\",\r\n            \"Date\": \"04.17.2023\"\r\n        },\r\n        {\r\n            \"Name\": \"TestName9\",\r\n            \"Number\": \"6\",\r\n            \"IsSomething\": \"false\",\r\n            \"Date\": \"04.17.2023\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Insert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOneColumnWithOneFilter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"entityName\": \"TestTable\",\r\n    \"updatingData\": \r\n    {\r\n        \"Name\": \"NotATestTable!!!\"\r\n    },\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Id\",\r\n                    \"value\": \"AF7A3A35-5D9C-48A4-A30E-03DBF7802BDA\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateManyColumnsWithManyFilters",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"entityName\": \"TestTable\",\r\n    \"updatingData\": \r\n    {\r\n        \"Name\": \"NotATestTable!!!!!!\",\r\n        \"Number\": \"1111\",\r\n        \"IsSomething\": \"true\",\r\n        \"Date\": \"04.17.2023\"\r\n    },\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Id\",\r\n                    \"value\": \"936E2CB1-7A8A-43CD-A607-43DF9431EF1E\"\r\n                },\r\n                {\r\n                    \"conditionalOperator\": 1,\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Number\",\r\n                    \"value\": \"5\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateManyColumnsWithManyFiltersInManyFilterGroups",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"entityName\": \"TestTable\",\r\n    \"updatingData\": \r\n    {\r\n        \"Name\": \"NotATestTable!!!!!!\",\r\n        \"Number\": \"6666\",\r\n        \"IsSomething\": \"true\",\r\n        \"Date\": \"04.17.2023\"\r\n    },\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Id\",\r\n                    \"value\": \"936E2CB1-7A8A-43CD-A607-43DF9431EF1E\"\r\n                },\r\n                {\r\n                    \"conditionalOperator\": 1,\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Number\",\r\n                    \"value\": \"5555\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"conditionalOperator\": 1,\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Id\",\r\n                    \"value\": \"B577FB42-616F-4B84-83BB-296BC2CACDDB\"\r\n                },\r\n                {\r\n                    \"conditionalOperator\": 1,\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Number\",\r\n                    \"value\": \"6\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWithOneFilter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"entityName\": \"TestTable\",\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"Id\",\r\n                    \"value\": \"936E2CB1-7A8A-43CD-A607-43DF9431EF1E\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWithOneFilterGroupAndManyFilters",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"entityName\": \"Orders\",\r\n    \"filtersGroups\": \r\n    [\r\n        {\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"ShipVia\",\r\n                    \"value\": \"3\"\r\n                },\r\n                {\r\n                    \"conditionalOperator\": 0,\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"ShipAddress\",\r\n                    \"value\": \"Berguvsvägen  8\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"conditionalOperator\": 1,\r\n            \"filters\": \r\n            [\r\n                {\r\n                    \"comparisonType\": 0,\r\n                    \"column\": \"ShipVia\",\r\n                    \"value\": \"2\"\r\n                },\r\n                {\r\n                    \"conditionalOperator\": 0,\r\n                    \"comparisonType\": 2,\r\n                    \"column\": \"ShipRegion\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5222/Data/Delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5222",
+							"path": [
+								"Data",
+								"Delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
