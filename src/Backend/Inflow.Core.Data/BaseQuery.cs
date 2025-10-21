@@ -2,7 +2,24 @@
 
 namespace Inflow.Core.Data;
 
-public abstract class BaseQuery(QueryFactory databaseProvider)
+public abstract class BaseQuery : IDisposable
 {
-    protected QueryFactory DatabaseProvider { get; private set; } = databaseProvider;
+    private bool _disposed;
+    
+    protected QueryFactory DatabaseProvider { get; private set; }
+
+    protected BaseQuery(QueryFactory databaseProvider)
+    {
+        ArgumentNullException.ThrowIfNull(databaseProvider);
+        DatabaseProvider = databaseProvider;
+    }
+
+    public void Dispose()
+    {
+        if (_disposed) return;
+        DatabaseProvider.Dispose();
+        GC.SuppressFinalize(this);
+        DatabaseProvider = null!;
+        _disposed = true;
+    }
 }

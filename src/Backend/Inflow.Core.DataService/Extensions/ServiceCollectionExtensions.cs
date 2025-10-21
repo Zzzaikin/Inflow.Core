@@ -1,8 +1,8 @@
 ﻿using Inflow.Core.Data;
 using Inflow.Core.Data.Schema;
 using Inflow.Core.Data.Options;
-using SqlKata.Execution;
 using InflowDataQuery = Inflow.Core.Data.Query;
+using SqlKata.Execution;
 
 namespace Inflow.Core.DataService.Extensions;
 
@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSingletonInflowDataQuery(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddSingleton<IDataQueryable, Query>(serviceProvider =>
+        return serviceCollection.AddSingleton<IDataQueryable, InflowDataQuery>(serviceProvider =>
         {
             var databaseProvider = serviceProvider.GetRequiredService<QueryFactory>(); 
             return new InflowDataQuery(databaseProvider);

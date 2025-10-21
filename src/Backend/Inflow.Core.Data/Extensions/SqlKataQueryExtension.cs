@@ -1,5 +1,4 @@
 ﻿using Inflow.Core.Data.DTO.DataRequest.BodyItems;
-using InflowJoin = Inflow.Core.Data.DTO.DataRequest.BodyItems.Join;
 using SqlKata.Execution;
 using SqlKataQuery = SqlKata.Query;
 
