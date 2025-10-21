@@ -3,8 +3,5 @@ using SqlKata.Compilers;
 
 namespace Inflow.Data.Options
 {
-    public class MySqlOptions : BaseSqlOptions
-    {
-        public MySqlOptions() : base(new MySqlCompiler(), new MySqlConnection()) { }
-    }
+    public class MySqlOptions() : BaseSqlOptions(new MySqlCompiler(), new MySqlConnection());
 }

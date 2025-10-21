@@ -4,18 +4,14 @@ namespace Inflow.Data.DTO.DataRequest
 {
     public class BaseDataRequestBody
     {
-        private string _entityName;
+        private readonly string _entityName = null!;
 
         public string EntityName
         {
-            get
+            get => _entityName;
+            init
             {
-                return _entityName;
-            }
-
-            set
-            {
-                Argument.IsNotNullOrEmpty(value, nameof(EntityName));
+                ArgumentNullException.ThrowIfNull(value, nameof(EntityName));
                 _entityName = value;
             }
         }

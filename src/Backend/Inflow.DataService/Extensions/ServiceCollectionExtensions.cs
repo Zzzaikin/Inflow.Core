@@ -30,47 +30,24 @@ namespace Inflow.DataService.Extensions
         public static IServiceCollection AddSingletonSqlOptions(this IServiceCollection serviceCollection,
             string sqlOptionsName, string dbConnectionString)
         {
-            Argument.IsNotNullOrEmpty(sqlOptionsName, nameof(sqlOptionsName));
-            Argument.IsNotNullOrEmpty(dbConnectionString, nameof(dbConnectionString));
-            
-            return serviceCollection.AddSingleton<BaseSqlOptions>(serviceProvider =>
+            ArgumentException.ThrowIfNullOrWhiteSpace(sqlOptionsName, nameof(sqlOptionsName));
+            ArgumentException.ThrowIfNullOrWhiteSpace(dbConnectionString, nameof(dbConnectionString));
+            return serviceCollection.AddSingleton<BaseSqlOptions>(_ =>
+                {
+                    switch (sqlOptionsName)
                     {
-                        switch (sqlOptionsName)
-                        {
-                            case nameof(SqlServerOptions):
-                                return new SqlServerOptions
-                                {
-                                    DbConnection =
-                                    {
-                                        ConnectionString = dbConnectionString
-                                    }
-                                };
-                            
-                            case nameof(PostgreSqlOptions):
-                                return new PostgreSqlOptions
-                                {
-                                    DbConnection =
-                                    {
-                                        ConnectionString = dbConnectionString
-                                    }
-                                };
-                            
-                            case nameof(MySqlOptions):
-                                return new MySqlOptions
-                                {
-                                    DbConnection =
-                                    {
-                                        ConnectionString = dbConnectionString
-                                    }
-                                };
-
-                            default:
-                                var exceptionMessage = 
-                                    string.Format(Resources.SqlOptionsAreNotImplemented, sqlOptionsName);
-                                
-                                throw new NotImplementedException(exceptionMessage);
-                        }
-                    });
+                        case nameof(SqlServerOptions):
+                            return new SqlServerOptions { DbConnection = { ConnectionString = dbConnectionString } };
+                        case nameof(PostgreSqlOptions):
+                            return new PostgreSqlOptions { DbConnection = { ConnectionString = dbConnectionString } };
+                        case nameof(MySqlOptions):
+                            return new MySqlOptions { DbConnection = { ConnectionString = dbConnectionString } };
+                        default:
+                            var exceptionMessage = 
+                                string.Format(Resources.SqlOptionsAreNotImplemented, sqlOptionsName);
+                            throw new NotImplementedException(exceptionMessage);
+                    }
+                });
         }
 
         public static IServiceCollection AddSingletonSqlSchema(this IServiceCollection serviceCollection)

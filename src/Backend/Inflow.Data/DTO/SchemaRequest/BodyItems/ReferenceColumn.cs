@@ -2,10 +2,10 @@
 {
     public class ReferenceColumn
     {
-        public Column RootColumn { get; set; }
+        public required Column RootColumn { get; set; }
 
-        public string ReferenceSchemaName { get; set; }
+        public required string ReferenceSchemaName { get; set; }
 
-        public Column ForeignColumn { get; set; }
+        public required Column ForeignColumn { get; set; }
     }
 }

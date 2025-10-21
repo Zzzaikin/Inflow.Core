@@ -4,28 +4,25 @@ namespace Inflow.DataService
 {
     public class Configuration
     {
-        public ConnectionStrings ConnectionStrings { get; set; }
+        public required ConnectionStrings ConnectionStrings { get; init; }
 
-        public int MaxSelectedRecordsCount { get; set; }
+        public int MaxSelectedRecordsCount { get; init; }
 
-        public string SqlOptionsName { get; set; }
+        public required string SqlOptionsName { get; init; }
 
-        public string Culture { get; set; }
+        public required string Culture { get; init; }
 
-        public string[] SupportedCulturesNames { get; set; }
+        public required string[] SupportedCulturesNames { get; init; }
 
         public IEnumerable<CultureInfo> SupportedCultures
         {
             get
             {
                 //TODO: Add SupportedCulturesNames null check.
-                foreach (var supportedCultureName in SupportedCulturesNames)
-                {
-                    yield return new CultureInfo(supportedCultureName);
-                }
+                return SupportedCulturesNames.Select(supportedCultureName => new CultureInfo(supportedCultureName));
             }
         }
         
-        public string OriginForWhichAllowedAnyMethodAndAnyHeaderInCorsPolicy { get; set; }
+        public required string OriginForWhichAllowedAnyMethodAndAnyHeaderInCorsPolicy { get; init; }
     }
 }

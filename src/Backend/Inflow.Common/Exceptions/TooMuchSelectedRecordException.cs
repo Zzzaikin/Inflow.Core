@@ -1,7 +1,4 @@
 ﻿namespace Inflow.Common.Exceptions
 {
-    public class TooMuchSelectedRecordException : ArgumentException 
-    {
-        public TooMuchSelectedRecordException(string message) : base(message) { }
-    }
+    public class TooMuchSelectedRecordException(string message) : ArgumentException(message);
 }

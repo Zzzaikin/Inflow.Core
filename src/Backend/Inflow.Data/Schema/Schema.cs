@@ -2,10 +2,8 @@
 
 namespace Inflow.Data.Schema
 {
-    public class Schema : BaseQuery, ISchema
+    public class Schema(QueryFactory databaseProvider) : BaseQuery(databaseProvider), ISchema
     {
-        public Schema(QueryFactory databaseProvider) : base(databaseProvider) { }
-
         public Task GetAsync(string name)
         {
             throw new NotImplementedException();

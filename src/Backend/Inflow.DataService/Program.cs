@@ -14,55 +14,51 @@ namespace Inflow.DataService
             var services = builder.Services;
 
             services.AddControllers();
-
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-
-            services.Configure<Configuration>(builder.Configuration);
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            var builderConfiguration = builder.Configuration;
-            var sqlOptionsName = builderConfiguration.GetValue<string>("SqlOptionsName");
-            var dbConnectionString = builderConfiguration.GetConnectionString("DbConnectionString");
-            
-            services.AddSingletonSqlOptions(sqlOptionsName, dbConnectionString);
-            services.AddSingletonDatabaseProvider();
-            services.AddSingletonInflowDataQuery();
-            services.AddSingletonSqlSchema();            
+            services.AddEndpointsApiExplorer()
+                .AddSwaggerGen()
+                .Configure<Configuration>(builder.Configuration)
+                .AddLocalization(options => options.ResourcesPath = "Resources")
+                .AddSingletonSqlOptions(
+                    builder.Configuration.GetValue<string>("SqlOptionsName") ??
+                    throw new InvalidOperationException(),
+                    builder.Configuration.GetConnectionString("DbConnectionString") ??
+                    throw new InvalidOperationException())
+                .AddSingletonDatabaseProvider()
+                .AddSingletonInflowDataQuery()
+                .AddSingletonSqlSchema();          
 
             var app = builder.Build();
-
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwagger().UseSwaggerUI();
             }
 
             var appConfiguration = app.Configuration.Get<Configuration>();
+            if (appConfiguration is null) throw new InvalidOperationException();
             var cultureName = appConfiguration.Culture;
             var supportedCultures = appConfiguration.SupportedCultures.ToList();
 
             app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(cultureName),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
-            
-            app.UseCors(corsPolicyBuilder =>
-            {
-                corsPolicyBuilder.WithOrigins(appConfiguration.OriginForWhichAllowedAnyMethodAndAnyHeaderInCorsPolicy)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            });
-
-            app.UseStaticFiles();
-            app.UseMiddleware<ExceptionHandler>();
-            app.UseHttpsRedirection();
-            app.UseAuthorization();
+                {
+                    DefaultRequestCulture = new RequestCulture(cultureName),
+                    SupportedCultures = supportedCultures,
+                    SupportedUICultures = supportedCultures
+                })
+                .UseCors(corsPolicyBuilder =>
+                {
+                    corsPolicyBuilder
+                        .WithOrigins(appConfiguration.OriginForWhichAllowedAnyMethodAndAnyHeaderInCorsPolicy)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                })
+                .UseStaticFiles()
+                .UseMiddleware<ExceptionHandler>()
+                .UseHttpsRedirection()
+                .UseAuthorization();
             app.MapControllers();
 
             var sqlOptions = app.Services.GetService<BaseSqlOptions>();
+            if (sqlOptions is null) throw new InvalidOperationException();
             sqlOptions.OpenConnectionIfClosed();
 
             app.Run();

@@ -2,6 +2,6 @@
 {
     public class InsertDataRequestBody : BaseDataRequestBody
     {
-        public IEnumerable<Dictionary<string, string>> InsertingData { get; set; }
+        public required IEnumerable<Dictionary<string, string>> InsertingData { get; set; }
     }
 }

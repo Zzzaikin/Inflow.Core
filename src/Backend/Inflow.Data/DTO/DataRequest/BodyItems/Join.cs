@@ -4,54 +4,40 @@ namespace Inflow.Data.DTO.DataRequest.BodyItems
 {
     public class Join
     {
-        private string _joinedEntityName;
-
-        private string _leftColumnName;
-
-        private string _rightColumnName;
+        private readonly string _joinedEntityName = null!;
+        private readonly string _leftColumnName = null!;
+        private readonly string _rightColumnName = null!;
 
         public string RightColumnName
         {
-            get
+            get => _rightColumnName;
+            init
             {
-                return _rightColumnName;
-            }
-
-            set
-            {
-                Argument.IsNotNullOrEmpty(value, nameof(RightColumnName));
+                ArgumentNullException.ThrowIfNull(value, nameof(RightColumnName));
                 _rightColumnName = value;
             }
         }
 
         public string LeftColumnName
         {
-            get
+            get => _leftColumnName;
+            init
             {
-                return _leftColumnName;
-            }
-
-            set
-            {
-                Argument.IsNotNullOrEmpty(value, nameof(LeftColumnName));
+                ArgumentNullException.ThrowIfNull(value, nameof(LeftColumnName));
                 _leftColumnName = value;
             }
         }
 
         public string JoinedEntityName
         {
-            get
+            get => _joinedEntityName;
+            init
             {
-                return _joinedEntityName;
-            }
-
-            set
-            {
-                Argument.IsNotNullOrEmpty(value, nameof(JoinedEntityName));
+                ArgumentNullException.ThrowIfNull(value,  nameof(JoinedEntityName));
                 _joinedEntityName = value;
             }
         }
 
-        public JoinType Type { get; set; }
+        public JoinType Type { get; init; }
     }
 }

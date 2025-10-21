@@ -1,51 +1,47 @@
-﻿using SqlKata.Execution;
-using Inflow.Data.Options;
+﻿using System.Diagnostics.CodeAnalysis;
+using SqlKata.Execution;
 using Inflow.Data.Extensions;
 using Inflow.Data.DTO.DataRequest;
 
 namespace Inflow.Data
 {
-    public class Query : BaseQuery, IDataQueryable
+    public class Query(QueryFactory databaseProvider) : BaseQuery(databaseProvider), IDataQueryable
     {
-        public Query(QueryFactory databaseProvider) : base(databaseProvider) { }
-
         public async Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody)
         {
-            var affectedRecordCount = await DatabaseProvider.Query(deleteDataRequestBody.EntityName)
+            if (deleteDataRequestBody?.FiltersGroups is null) throw new InvalidOperationException();
+            return await DatabaseProvider.Query(deleteDataRequestBody.EntityName)
                 .Where(filtersGroups: deleteDataRequestBody.FiltersGroups)
                 .DeleteAsync();
-
-            return affectedRecordCount;
         }
 
         public async Task<IEnumerable<string>> InsertAsync(InsertDataRequestBody insertDataRequestBody)
         {
-            var insertedRecordsIds = await DatabaseProvider.Query(insertDataRequestBody.EntityName)
+            return await DatabaseProvider.Query(insertDataRequestBody.EntityName)
                 .InsertManyGetIdsAsync(insertDataRequestBody.InsertingData);
-
-            return insertedRecordsIds;
+            
         }
 
+        [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly")]
         public async Task<IEnumerable<dynamic>> SelectAsync(SelectDataRequestBody selectDataRequestBody)
         {
-            var records = await DatabaseProvider.Query()
+            ArgumentNullException.ThrowIfNull(selectDataRequestBody, nameof(selectDataRequestBody));
+            ArgumentNullException.ThrowIfNull(selectDataRequestBody.ColumnNames, nameof(selectDataRequestBody.ColumnNames));
+            return await DatabaseProvider.Query()
                 .Select(selectDataRequestBody.ColumnNames.ToArray())
                 .From(selectDataRequestBody.EntityName)
                 .Join(joins: selectDataRequestBody.Joins)
                 .Where(filtersGroups: selectDataRequestBody.FiltersGroups)
                 .OrderBy(order: selectDataRequestBody.Order)
                 .GetAsync();
-
-            return records;
         }
 
         public async Task<int> UpdateAsync(UpdateDataRequestBody updateDataRequestBody)
         {
-            var affectedRecordsCount = await DatabaseProvider.Query(updateDataRequestBody.EntityName)
+            ArgumentNullException.ThrowIfNull(updateDataRequestBody, nameof(updateDataRequestBody));
+            return await DatabaseProvider.Query(updateDataRequestBody.EntityName)
                 .Where(filtersGroups: updateDataRequestBody.FiltersGroups)
                 .UpdateAsync(updateDataRequestBody.UpdatingData);
-
-            return affectedRecordsCount;
         }
     }
 }

@@ -4,6 +4,6 @@
     {
         public ConditionalOperator ConditionalOperator { get; set; }
 
-        public IEnumerable<Filter> Filters { get; set; }
+        public required IEnumerable<Filter> Filters { get; set; }
     }
 }

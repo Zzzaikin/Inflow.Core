@@ -13,9 +13,8 @@ namespace Inflow.Data.Options
 
         protected BaseSqlOptions(Compiler compiler, DbConnection dbConnection) 
         {
-            Argument.IsNotNull(compiler, nameof(compiler));
-            Argument.IsNotNull(dbConnection, nameof(dbConnection));
-
+            ArgumentNullException.ThrowIfNull(compiler, nameof(compiler));
+            ArgumentNullException.ThrowIfNull(dbConnection, nameof(dbConnection));
             Compiler = compiler;
             DbConnection = dbConnection;
         }
@@ -27,18 +26,12 @@ namespace Inflow.Data.Options
 
         public void OpenConnectionIfClosed()
         {
-            if (DbConnection.State == ConnectionState.Closed)
-            {
-                DbConnection.Open();
-            }
+            if (DbConnection.State == ConnectionState.Closed) DbConnection.Open();
         }
 
         private void CloseConnectionIfOpened()
         {
-            if (DbConnection.State == ConnectionState.Open)
-            {
-                DbConnection.Close();
-            }
+            if (DbConnection.State == ConnectionState.Open) DbConnection.Close();
         }
     }
 }
