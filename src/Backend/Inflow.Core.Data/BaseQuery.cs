@@ -14,12 +14,20 @@ public abstract class BaseQuery : IDisposable
         DatabaseProvider = databaseProvider;
     }
 
-    public void Dispose()
+    protected virtual void Dispose(bool disposing)
     {
         if (_disposed) return;
-        DatabaseProvider.Dispose();
-        GC.SuppressFinalize(this);
-        DatabaseProvider = null!;
+        if (disposing)
+        {
+            DatabaseProvider.Dispose();
+            DatabaseProvider = null!;
+        }
         _disposed = true;
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }
