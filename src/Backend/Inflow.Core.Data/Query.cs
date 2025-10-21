@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Inflow.Core.Data.DTO.DataRequest;
-using SqlKata.Execution;
+﻿using Inflow.Core.Data.DTO.DataRequest;
 using Inflow.Core.Data.Extensions;
+using System.Diagnostics.CodeAnalysis;
+using SqlKata.Execution;
 
 namespace Inflow.Core.Data;
 
@@ -9,7 +9,6 @@ public class Query(QueryFactory databaseProvider) : BaseQuery(databaseProvider),
 {
     public async Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody)
     {
-        if (deleteDataRequestBody?.FiltersGroups is null) throw new InvalidOperationException();
         return await DatabaseProvider.Query(deleteDataRequestBody.EntityName)
             .Where(filtersGroups: deleteDataRequestBody.FiltersGroups)
             .DeleteAsync();
