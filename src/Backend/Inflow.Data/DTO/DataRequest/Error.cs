@@ -1,7 +1,6 @@
-﻿namespace Inflow.Data.DTO.DataRequest
+﻿namespace Inflow.Data.DTO.DataRequest;
+
+public class Error
 {
-    public class Error
-    {
-        public required string Message { init; get; }
-    }
+    public required string Message { init; get; }
 }

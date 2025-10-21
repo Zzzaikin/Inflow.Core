@@ -1,15 +1,14 @@
 ﻿using Inflow.Data.DTO.DataRequest;
 
-namespace Inflow.Data
+namespace Inflow.Data;
+
+public interface IDataQueryable
 {
-    public interface IDataQueryable
-    {
-        Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody);
+    Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody);
 
-        Task<IEnumerable<string>> InsertAsync(InsertDataRequestBody insertDataRequestBody);
+    Task<IEnumerable<string>> InsertAsync(InsertDataRequestBody insertDataRequestBody);
 
-        Task<int> UpdateAsync(UpdateDataRequestBody updateDataRequestBody);
+    Task<int> UpdateAsync(UpdateDataRequestBody updateDataRequestBody);
 
-        Task<IEnumerable<dynamic>> SelectAsync(SelectDataRequestBody selectDataRequestBody);
-    }
+    Task<IEnumerable<dynamic>> SelectAsync(SelectDataRequestBody selectDataRequestBody);
 }

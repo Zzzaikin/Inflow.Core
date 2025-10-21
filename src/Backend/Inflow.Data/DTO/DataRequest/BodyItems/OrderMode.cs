@@ -1,8 +1,7 @@
-﻿namespace Inflow.Data.DTO.DataRequest.BodyItems
+﻿namespace Inflow.Data.DTO.DataRequest.BodyItems;
+
+public enum OrderMode
 {
-    public enum OrderMode
-    {
-        Asc,
-        Desc
-    }
+    Asc,
+    Desc
 }

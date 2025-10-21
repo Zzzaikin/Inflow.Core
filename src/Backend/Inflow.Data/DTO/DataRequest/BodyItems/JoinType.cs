@@ -1,11 +1,10 @@
-﻿namespace Inflow.Data.DTO.DataRequest.BodyItems
+﻿namespace Inflow.Data.DTO.DataRequest.BodyItems;
+
+public enum JoinType
 {
-    public enum JoinType
-    {
-        Left,
-        Right,
-        Inner,
-        Full,
-        Cross
-    }
+    Left,
+    Right,
+    Inner,
+    Full,
+    Cross
 }

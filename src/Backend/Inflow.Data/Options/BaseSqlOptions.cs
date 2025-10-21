@@ -3,35 +3,34 @@ using System.Data.Common;
 using SqlKata.Compilers;
 using Inflow.Common;
 
-namespace Inflow.Data.Options
+namespace Inflow.Data.Options;
+
+public abstract class BaseSqlOptions 
 {
-    public abstract class BaseSqlOptions 
+    public Compiler Compiler { get; private set; }
+
+    public DbConnection DbConnection { get; private set; }
+
+    protected BaseSqlOptions(Compiler compiler, DbConnection dbConnection) 
     {
-        public Compiler Compiler { get; private set; }
+        ArgumentNullException.ThrowIfNull(compiler, nameof(compiler));
+        ArgumentNullException.ThrowIfNull(dbConnection, nameof(dbConnection));
+        Compiler = compiler;
+        DbConnection = dbConnection;
+    }
 
-        public DbConnection DbConnection { get; private set; }
+    ~BaseSqlOptions() 
+    {
+        CloseConnectionIfOpened();
+    }
 
-        protected BaseSqlOptions(Compiler compiler, DbConnection dbConnection) 
-        {
-            ArgumentNullException.ThrowIfNull(compiler, nameof(compiler));
-            ArgumentNullException.ThrowIfNull(dbConnection, nameof(dbConnection));
-            Compiler = compiler;
-            DbConnection = dbConnection;
-        }
+    public void OpenConnectionIfClosed()
+    {
+        if (DbConnection.State == ConnectionState.Closed) DbConnection.Open();
+    }
 
-        ~BaseSqlOptions() 
-        {
-            CloseConnectionIfOpened();
-        }
-
-        public void OpenConnectionIfClosed()
-        {
-            if (DbConnection.State == ConnectionState.Closed) DbConnection.Open();
-        }
-
-        private void CloseConnectionIfOpened()
-        {
-            if (DbConnection.State == ConnectionState.Open) DbConnection.Close();
-        }
+    private void CloseConnectionIfOpened()
+    {
+        if (DbConnection.State == ConnectionState.Open) DbConnection.Close();
     }
 }

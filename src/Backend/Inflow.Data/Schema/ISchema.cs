@@ -1,7 +1,6 @@
-﻿namespace Inflow.Data.Schema
+﻿namespace Inflow.Data.Schema;
+
+public interface ISchema
 {
-    public interface ISchema
-    {
-        Task GetAsync(string name);
-    }
+    Task GetAsync(string name);
 }

@@ -1,8 +1,7 @@
-﻿namespace Inflow.Data.DTO.DataRequest.BodyItems
+﻿namespace Inflow.Data.DTO.DataRequest.BodyItems;
+
+public enum ConditionalOperator
 {
-    public enum ConditionalOperator
-    {
-        And,
-        Or
-    }
+    And,
+    Or
 }

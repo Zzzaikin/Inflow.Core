@@ -1,7 +1,6 @@
-﻿namespace Inflow.DataService
+﻿namespace Inflow.DataService;
+
+public class ConnectionStrings
 {
-    public class ConnectionStrings
-    {
-        public required string DbConnectionString { get; set; }
-    }
+    public required string DbConnectionString { get; set; }
 }

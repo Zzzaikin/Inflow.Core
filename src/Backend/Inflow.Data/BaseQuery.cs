@@ -1,10 +1,8 @@
-﻿using Inflow.Data.Options;
-using SqlKata.Execution;
+﻿using SqlKata.Execution;
 
-namespace Inflow.Data
+namespace Inflow.Data;
+
+public abstract class BaseQuery(QueryFactory databaseProvider)
 {
-    public abstract class BaseQuery(QueryFactory databaseProvider)
-    {
-        protected QueryFactory DatabaseProvider { get; private set; } = databaseProvider;
-    }
+    protected QueryFactory DatabaseProvider { get; private set; } = databaseProvider;
 }

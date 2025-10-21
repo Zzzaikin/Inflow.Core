@@ -1,11 +1,10 @@
-﻿namespace Inflow.Data.DTO.SchemaRequest.BodyItems
+﻿namespace Inflow.Data.DTO.SchemaRequest.BodyItems;
+
+public class ReferenceColumn
 {
-    public class ReferenceColumn
-    {
-        public required Column RootColumn { get; set; }
+    public required Column RootColumn { get; set; }
 
-        public required string ReferenceSchemaName { get; set; }
+    public required string ReferenceSchemaName { get; set; }
 
-        public required Column ForeignColumn { get; set; }
-    }
+    public required Column ForeignColumn { get; set; }
 }

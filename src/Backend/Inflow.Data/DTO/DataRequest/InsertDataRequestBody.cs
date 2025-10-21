@@ -1,7 +1,6 @@
-﻿namespace Inflow.Data.DTO.DataRequest
+﻿namespace Inflow.Data.DTO.DataRequest;
+
+public class InsertDataRequestBody : BaseDataRequestBody
 {
-    public class InsertDataRequestBody : BaseDataRequestBody
-    {
-        public required IEnumerable<Dictionary<string, string>> InsertingData { get; set; }
-    }
+    public required IEnumerable<Dictionary<string, string>> InsertingData { get; set; }
 }

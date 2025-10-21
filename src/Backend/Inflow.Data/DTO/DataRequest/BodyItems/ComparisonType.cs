@@ -1,14 +1,13 @@
-﻿namespace Inflow.Data.DTO.DataRequest.BodyItems
+﻿namespace Inflow.Data.DTO.DataRequest.BodyItems;
+
+public enum ComparisonType
 {
-    public enum ComparisonType
-    {
-        Equal,
-        NotEqual,
-        IsNull,
-        NotNull,
-        In,
-        NotIn,
-        More,
-        Less
-    }
+    Equal,
+    NotEqual,
+    IsNull,
+    NotNull,
+    In,
+    NotIn,
+    More,
+    Less
 }

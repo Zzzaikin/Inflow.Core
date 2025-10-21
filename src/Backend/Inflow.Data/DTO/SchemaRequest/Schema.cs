@@ -1,11 +1,10 @@
 ﻿using Inflow.Data.DTO.SchemaRequest.BodyItems;
 
-namespace Inflow.Data.DTO.SchemaRequest
-{
-    public class Schema
-    {
-        public required string Name { get; set; }
+namespace Inflow.Data.DTO.SchemaRequest;
 
-        public required IEnumerable<Column> Columns { get; set; }
-    }
+public class Schema
+{
+    public required string Name { get; set; }
+
+    public required IEnumerable<Column> Columns { get; set; }
 }
