@@ -1,1 +1,4 @@
 .idea
+/src/Backend/*/obj
+/src/Backend/*/bin
+*.DotSettings.user
