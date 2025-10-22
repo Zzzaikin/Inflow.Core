@@ -308,7 +308,8 @@ create table public."user"
     modifiedon timestamp default timezone('utc'::text, CURRENT_TIMESTAMP),
     contactid  uuid                                                       not null
         constraint user_contact_id_fk
-            references public.contact
+            references public.contact,
+    active     boolean
 );
 
 alter table public."user"
