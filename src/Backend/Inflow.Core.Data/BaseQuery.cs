@@ -1,8 +1,9 @@
-﻿using SqlKata.Execution;
+﻿using Inflow.Core.Data.DTO.DataRequest;
+using SqlKata.Execution;
 
 namespace Inflow.Core.Data;
 
-public abstract class BaseQuery : IDisposable
+public abstract class BaseQuery : IDataQueryable
 {
     private bool _disposed;
     
@@ -12,6 +13,17 @@ public abstract class BaseQuery : IDisposable
     {
         ArgumentNullException.ThrowIfNull(databaseProvider);
         DatabaseProvider = databaseProvider;
+    }
+    
+    public abstract Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody);
+    public abstract Task<IEnumerable<string>> InsertAsync(InsertDataRequestBody insertDataRequestBody);
+    public abstract Task<int> UpdateAsync(UpdateDataRequestBody updateDataRequestBody);
+    public abstract Task<IEnumerable<dynamic>> SelectAsync(SelectDataRequestBody selectDataRequestBody);
+    
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)
@@ -23,11 +35,5 @@ public abstract class BaseQuery : IDisposable
             DatabaseProvider = null!;
         }
         _disposed = true;
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
