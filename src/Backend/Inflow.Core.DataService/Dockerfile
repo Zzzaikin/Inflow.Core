@@ -7,18 +7,18 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["Inflow.DataService/Inflow.DataService.csproj", "Inflow.DataService/"]
-COPY ["Inflow.Common/Inflow.Common.csproj", "Inflow.Common/"]
-COPY ["Inflow.Data/Inflow.Data.csproj", "Inflow.Data/"]
-RUN dotnet restore "Inflow.DataService/Inflow.DataService.csproj"
+COPY ["Inflow.Core.DataService/Inflow.Core.DataService.csproj", "Inflow.Core.DataService/"]
+COPY ["Inflow.Core.Common/Inflow.Core.Common.csproj", "Inflow.Core.Common/"]
+COPY ["Inflow.Core.Data/Inflow.Core.Data.csproj", "Inflow.Core.Data/"]
+RUN dotnet restore "Inflow.Core.DataService/Inflow.Core.DataService.csproj"
 COPY . .
-WORKDIR "/src/Inflow.DataService"
-RUN dotnet build "Inflow.DataService.csproj" -c Release -o /app/build
+WORKDIR "/src/Inflow.Core.DataService"
+RUN dotnet build "Inflow.Core.DataService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Inflow.DataService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Inflow.Core.DataService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Inflow.DataService.dll"] 
+ENTRYPOINT ["dotnet", "Inflow.Core.DataService.dll"] 
