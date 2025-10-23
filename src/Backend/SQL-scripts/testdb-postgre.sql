@@ -287,47 +287,47 @@ create domain information_schema.yes_or_no as varchar(3)
     constraint yes_or_no_check check ((VALUE)::text = ANY
     ((ARRAY ['YES'::character varying, 'NO'::character varying])::text[]));
 
-create table public.contact
+create table public."Contact"
 (
-    id   uuid default uuid_generate_v4() not null
+    "Id"   uuid default uuid_generate_v4() not null
         constraint contact_pk
             primary key,
-    name text                            not null
+    "Name" text                            not null
 );
 
-alter table public.contact
+alter table public."Contact"
     owner to postgres;
 
-create table public."user"
+create table public."User"
 (
-    "Id"       uuid      default uuid_generate_v4()                       not null
+    "Id"         uuid      default uuid_generate_v4()                       not null
         constraint user_pk
             primary key,
-    name       text                                                       not null,
-    createdon  timestamp default timezone('utc'::text, CURRENT_TIMESTAMP) not null,
-    modifiedon timestamp default timezone('utc'::text, CURRENT_TIMESTAMP),
-    contactid  uuid                                                       not null
+    "Name"       text                                                       not null,
+    "Createdon"  timestamp default timezone('utc'::text, CURRENT_TIMESTAMP) not null,
+    "Modifiedon" timestamp default timezone('utc'::text, CURRENT_TIMESTAMP),
+    "Contactid"  uuid                                                       not null
         constraint user_contact_id_fk
-            references public.contact,
-    active     boolean
+            references public."Contact",
+    "Active"     boolean
 );
 
-alter table public."user"
+alter table public."User"
     owner to postgres;
 
-create table public."order"
+create table public."Order"
 (
-    id          uuid default uuid_generate_v4() not null
+    "Id"          uuid default uuid_generate_v4() not null
         constraint order_pk
             primary key,
-    name        text                            not null,
-    description text,
-    userid      uuid
+    "Name"        text                            not null,
+    "Description" text,
+    "Userid"      uuid                            not null
         constraint order_user_id_fk
-            references public."user"
+            references public."User"
 );
 
-alter table public."order"
+alter table public."Order"
     owner to postgres;
 
 create table pg_catalog.pg_aggregate
