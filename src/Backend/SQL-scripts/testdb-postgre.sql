@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict Ugdb3EcEXH7Ru86qvaFhJDuNkdySxZ66Rjx92eDAblN1mOFKaaWnos9xBHGqBDf
+\restrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
 
 -- Dumped from database version 16.10
 -- Dumped by pg_dump version 16.10
@@ -28,9 +28,9 @@ CREATE DATABASE "TestInflow" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_
 
 ALTER DATABASE "TestInflow" OWNER TO postgres;
 
-\unrestrict Ugdb3EcEXH7Ru86qvaFhJDuNkdySxZ66Rjx92eDAblN1mOFKaaWnos9xBHGqBDf
+\unrestrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
 \connect "TestInflow"
-\restrict Ugdb3EcEXH7Ru86qvaFhJDuNkdySxZ66Rjx92eDAblN1mOFKaaWnos9xBHGqBDf
+\restrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -81,7 +81,7 @@ CREATE TABLE public."Order" (
     "Id" uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     "Name" text NOT NULL,
     "Description" text,
-    "Userid" uuid NOT NULL
+    "UserId" uuid NOT NULL
 );
 
 
@@ -117,13 +117,13 @@ INSERT INTO public."Contact" ("Id", "Name") VALUES ('5b1c0538-d7c2-41d6-9749-ae4
 -- Data for Name: Order; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('1b9e6672-3c27-4a58-ae18-beb3c79c0cdd', 'code1', NULL, '60cada01-51f2-4472-b778-2a5321b34cf2');
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('662bd9ed-4c4a-4173-9022-e98bfc85034e', 'code2', NULL, '2cf5a835-f044-4087-81df-6b3353e419fb');
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('4139f183-9340-4bec-9a16-59a982e7d3c6', 'code3', NULL, '5369c0c6-1707-46a5-a72f-33e0c4bb3433');
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('3915a9b0-0a0f-4cd3-a6ef-1497f63c7c3c', 'code1', NULL, '60cada01-51f2-4472-b778-2a5321b34cf2');
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('b2f3e8e2-7906-44ce-a8f1-dbf87999a6d5', 'code2', NULL, '2cf5a835-f044-4087-81df-6b3353e419fb');
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('943457c9-0359-4298-9b91-c526f21b351a', 'code3', NULL, '5369c0c6-1707-46a5-a72f-33e0c4bb3433');
-INSERT INTO public."Order" ("Id", "Name", "Description", "Userid") VALUES ('ea4fb850-5e93-48f3-8e84-0d2bc96c2b6f', 'code4', NULL, '7e283565-9d9c-4ab4-85a6-75301ed32c7e');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('1b9e6672-3c27-4a58-ae18-beb3c79c0cdd', 'code1', NULL, '60cada01-51f2-4472-b778-2a5321b34cf2');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('662bd9ed-4c4a-4173-9022-e98bfc85034e', 'code2', NULL, '2cf5a835-f044-4087-81df-6b3353e419fb');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('4139f183-9340-4bec-9a16-59a982e7d3c6', 'code3', NULL, '5369c0c6-1707-46a5-a72f-33e0c4bb3433');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('3915a9b0-0a0f-4cd3-a6ef-1497f63c7c3c', 'code1', NULL, '60cada01-51f2-4472-b778-2a5321b34cf2');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('b2f3e8e2-7906-44ce-a8f1-dbf87999a6d5', 'code2', NULL, '2cf5a835-f044-4087-81df-6b3353e419fb');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('943457c9-0359-4298-9b91-c526f21b351a', 'code3', NULL, '5369c0c6-1707-46a5-a72f-33e0c4bb3433');
+INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('ea4fb850-5e93-48f3-8e84-0d2bc96c2b6f', 'code4', NULL, '7e283565-9d9c-4ab4-85a6-75301ed32c7e');
 
 
 --
@@ -165,7 +165,7 @@ ALTER TABLE ONLY public."User"
 --
 
 ALTER TABLE ONLY public."Order"
-    ADD CONSTRAINT order_user_id_fk FOREIGN KEY ("Userid") REFERENCES public."User"("Id");
+    ADD CONSTRAINT order_user_id_fk FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 
 
 --
@@ -180,5 +180,5 @@ ALTER TABLE ONLY public."User"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Ugdb3EcEXH7Ru86qvaFhJDuNkdySxZ66Rjx92eDAblN1mOFKaaWnos9xBHGqBDf
+\unrestrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
 
