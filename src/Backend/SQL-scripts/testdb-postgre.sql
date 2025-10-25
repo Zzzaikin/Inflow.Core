@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
+\restrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 
 -- Dumped from database version 16.10
 -- Dumped by pg_dump version 16.10
@@ -28,9 +28,9 @@ CREATE DATABASE "TestInflow" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_
 
 ALTER DATABASE "TestInflow" OWNER TO postgres;
 
-\unrestrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
+\unrestrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 \connect "TestInflow"
-\restrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
+\restrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -96,7 +96,7 @@ CREATE TABLE public."User" (
     "Name" text NOT NULL,
     "Createdon" timestamp without time zone DEFAULT timezone('utc'::text, CURRENT_TIMESTAMP) NOT NULL,
     "Modifiedon" timestamp without time zone DEFAULT timezone('utc'::text, CURRENT_TIMESTAMP),
-    "Contactid" uuid NOT NULL,
+    "ContactId" uuid NOT NULL,
     "Active" boolean
 );
 
@@ -130,10 +130,10 @@ INSERT INTO public."Order" ("Id", "Name", "Description", "UserId") VALUES ('ea4f
 -- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "Contactid", "Active") VALUES ('60cada01-51f2-4472-b778-2a5321b34cf2', 'user1', '2025-10-22 19:15:27.935505', '2025-10-22 19:15:27.935505', '1fd2eea6-7314-4bf2-9e70-e4d585c9a537', NULL);
-INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "Contactid", "Active") VALUES ('2cf5a835-f044-4087-81df-6b3353e419fb', 'user2', '2025-10-22 19:15:27.965799', '2025-10-22 19:15:27.965799', '259ef6a1-1f14-4f7d-a066-4d812b028200', NULL);
-INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "Contactid", "Active") VALUES ('5369c0c6-1707-46a5-a72f-33e0c4bb3433', 'user3', '2025-10-22 19:15:27.973497', '2025-10-22 19:15:27.973497', '90f94dd0-4951-4257-abef-5ff9f66a3092', NULL);
-INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "Contactid", "Active") VALUES ('7e283565-9d9c-4ab4-85a6-75301ed32c7e', 'user4', '2025-10-22 19:15:27.979562', '2025-10-22 19:15:27.979562', '5b1c0538-d7c2-41d6-9749-ae4454157793', NULL);
+INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "ContactId", "Active") VALUES ('60cada01-51f2-4472-b778-2a5321b34cf2', 'user1', '2025-10-22 19:15:27.935505', '2025-10-22 19:15:27.935505', '1fd2eea6-7314-4bf2-9e70-e4d585c9a537', NULL);
+INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "ContactId", "Active") VALUES ('2cf5a835-f044-4087-81df-6b3353e419fb', 'user2', '2025-10-22 19:15:27.965799', '2025-10-22 19:15:27.965799', '259ef6a1-1f14-4f7d-a066-4d812b028200', NULL);
+INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "ContactId", "Active") VALUES ('5369c0c6-1707-46a5-a72f-33e0c4bb3433', 'user3', '2025-10-22 19:15:27.973497', '2025-10-22 19:15:27.973497', '90f94dd0-4951-4257-abef-5ff9f66a3092', NULL);
+INSERT INTO public."User" ("Id", "Name", "Createdon", "Modifiedon", "ContactId", "Active") VALUES ('7e283565-9d9c-4ab4-85a6-75301ed32c7e', 'user4', '2025-10-22 19:15:27.979562', '2025-10-22 19:15:27.979562', '5b1c0538-d7c2-41d6-9749-ae4454157793', NULL);
 
 
 --
@@ -173,12 +173,12 @@ ALTER TABLE ONLY public."Order"
 --
 
 ALTER TABLE ONLY public."User"
-    ADD CONSTRAINT user_contact_id_fk FOREIGN KEY ("Contactid") REFERENCES public."Contact"("Id");
+    ADD CONSTRAINT user_contact_id_fk FOREIGN KEY ("ContactId") REFERENCES public."Contact"("Id");
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict S2RHPLI3Ob3Dwcv4pWe7jOklaNulRbgrT9sRwUKyFerhIzMvtydQ977DiMIb33r
+\unrestrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 
