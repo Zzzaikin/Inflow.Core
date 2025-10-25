@@ -17,7 +17,7 @@ public class Query(QueryFactory databaseProvider) : BaseQuery(databaseProvider)
     public override async Task<IEnumerable<string>> InsertAsync(InsertDataRequestBody insertDataRequestBody)
     {
         return await DatabaseProvider.Query(insertDataRequestBody.EntityName)
-            .InsertManyGetIdsAsync(insertDataRequestBody.InsertingData);
+            .InsertWithConversionOfValueTypesAsync(insertDataRequestBody.InsertingData);
             
     }
 
@@ -40,6 +40,6 @@ public class Query(QueryFactory databaseProvider) : BaseQuery(databaseProvider)
         ArgumentNullException.ThrowIfNull(updateDataRequestBody, nameof(updateDataRequestBody));
         return await DatabaseProvider.Query(updateDataRequestBody.EntityName)
             .Where(filtersGroups: updateDataRequestBody.FiltersGroups)
-            .UpdateAsync(updateDataRequestBody.UpdatingData);
+            .UpdateWithConversionOfValueTypesAsync(updateDataRequestBody.UpdatingData);
     }
 }

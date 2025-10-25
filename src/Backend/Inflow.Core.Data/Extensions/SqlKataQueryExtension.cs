@@ -6,33 +6,36 @@ namespace Inflow.Core.Data.Extensions;
 
 public static class SqlKataQueryExtension
 {
-    public static async Task<int> UpdateAsync(this SqlKataQuery query,
-        Dictionary<string, string> updatingData)
+    public static async Task<int> UpdateWithConversionOfValueTypesAsync(this SqlKataQuery query,
+        Dictionary<string, object?> updatingData)
     {
         ArgumentNullException.ThrowIfNull(query, nameof(query));
-        var updatingDataWithUpcastedValue = 
-            updatingData.ToDictionary(pair => pair.Key, object (pair) => pair.Value);
-        return await query.UpdateAsync(updatingDataWithUpcastedValue);
+        var typedUpdatingData = GetTypedData(updatingData);
+        return await query.UpdateAsync(typedUpdatingData);
     }
 
-    public static async Task<IEnumerable<string>> InsertManyGetIdsAsync(this SqlKataQuery query,
-        IEnumerable<Dictionary<string, string>> insertingData)
+    public static async Task<IEnumerable<string>> InsertWithConversionOfValueTypesAsync(this SqlKataQuery query,
+        IEnumerable<Dictionary<string, object?>> insertingData)
     {
         ArgumentNullException.ThrowIfNull(insertingData, nameof(insertingData));
         var insertedIds = new List<string>();
-
+        
         foreach (var insertingDataItem in insertingData)
         {
-            var insertingDataItemWithUpcastedValue =
-                insertingDataItem.ToDictionary(pair => pair.Key, object (pair) => pair.Value);
-                
-            if (!insertingDataItemWithUpcastedValue.TryGetValue("Id", out var value))
+            var typedInsertingDataItem = GetTypedData(insertingDataItem);
+            if (!typedInsertingDataItem.TryGetValue("Id", out var value))
             {
-                value = Guid.NewGuid().ToString();;
-                insertingDataItemWithUpcastedValue.Add("Id", value);
+                value = Guid.NewGuid();
+                typedInsertingDataItem.Add("Id", value);
             }
-            var recordId = value.ToString();
-            await query.InsertAsync(insertingDataItemWithUpcastedValue);
+            else if (value is null)
+            {
+                value = Guid.NewGuid();
+                typedInsertingDataItem["Id"] = value;
+            }
+
+            var recordId = value?.ToString();
+            await query.InsertAsync(typedInsertingDataItem);
             insertedIds.Add(recordId!);
         }
         return insertedIds;
@@ -101,15 +104,34 @@ public static class SqlKataQueryExtension
         return query;
     }
 
+    /// <summary>
+    /// Sqlkata allows to add only Or operator. If you do not set Or it will be And operator by default.
+    /// Therefore, field ConditionalOperator can be null, and it's mean that ConditionalOperator will be And.
+    /// </summary>
     private static void SetOrConditionalOperatorIfExists(SqlKataQuery query, ConditionalOperator conditionalOperator)
     {
-        /* Sqlkata allows to add only Or instruction. If do not call Or() it will be And instruction by default.
-         * Therefore, field ConditionalOperator can be null, and it's mean that ConditionalOperator will be And.
-         */
         if (conditionalOperator == ConditionalOperator.Or)
         {
             query.Or();
         }
+    }
+
+    private static Dictionary<string, object?> GetTypedData(Dictionary<string, object?> rawData)
+    {
+        return rawData.ToDictionary((pair) => pair.Key, object? (pair) => GetTypedValue(pair.Value));
+    }
+
+    private static object? GetTypedValue(object? rawData)
+    {
+        if (rawData is null) return null;
+        var stringValue = rawData.ToString();
+        if (Guid.TryParse(stringValue, out var guidValue)) return guidValue;
+        if (bool.TryParse(stringValue, out var boolValue)) return boolValue;
+        if (DateTime.TryParse(stringValue, out var dateTimeValue)) return dateTimeValue;
+        if (int.TryParse(stringValue, out var intValue)) return intValue;
+        if (double.TryParse(stringValue, out var doubleValue)) return doubleValue;
+        if (decimal.TryParse(stringValue, out var decimalValue)) return decimalValue;
+        return stringValue;
     }
 
     private static SqlKataQuery SetFiltersFromGroup(SqlKataQuery query, IEnumerable<Filter> filters)
@@ -120,7 +142,7 @@ public static class SqlKataQueryExtension
 
             var comparisonType = filter.ComparisonType;
             var filterColumn = filter.Column;
-            var filterValue = filter.Value;
+            var filterValue = GetTypedValue(filter.Value);
 
             switch (filter.ComparisonType)
             {
