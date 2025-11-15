@@ -121,6 +121,10 @@ public static class SqlKataQueryExtension
         return rawData.ToDictionary((pair) => pair.Key, object? (pair) => GetTypedValue(pair.Value));
     }
 
+    /// <summary>
+    /// Returns typed value (null, Guid, bool, DateTime, int, double, decimal or string). String will be if others
+    /// types have not parsed.
+    /// </summary>
     private static object? GetTypedValue(object? rawData)
     {
         if (rawData is null) return null;

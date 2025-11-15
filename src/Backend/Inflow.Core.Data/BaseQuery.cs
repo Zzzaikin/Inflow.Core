@@ -1,4 +1,5 @@
 ﻿using Inflow.Core.Data.DTO.DataRequest;
+using SqlKata.Compilers;
 using SqlKata.Execution;
 
 namespace Inflow.Core.Data;
@@ -7,7 +8,7 @@ public abstract class BaseQuery : IDataQueryable
 {
     private bool _disposed;
     
-    protected QueryFactory DatabaseProvider { get; private set; }
+    public QueryFactory DatabaseProvider { get; private set; }
 
     protected BaseQuery(QueryFactory databaseProvider)
     {
@@ -16,8 +17,11 @@ public abstract class BaseQuery : IDataQueryable
     }
     
     public abstract Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody);
+    
     public abstract Task<IEnumerable<string>> InsertAsync(InsertDataRequestBody insertDataRequestBody);
+    
     public abstract Task<int> UpdateAsync(UpdateDataRequestBody updateDataRequestBody);
+    
     public abstract Task<IEnumerable<dynamic>> SelectAsync(SelectDataRequestBody selectDataRequestBody);
     
     public void Dispose()

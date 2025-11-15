@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inflow.Core.Common", "Inflo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inflow.Core.Data", "Inflow.Core.Data\Inflow.Core.Data.csproj", "{055501BC-3350-4B93-8714-6C2EB9946B2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflow.Core.Data.IntegrationTests", "Inflow.Core.Data.IntegrationTests\Inflow.Core.Data.IntegrationTests.csproj", "{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflow.Core.IntegrationTests.Core", "Inflow.Core.IntegrationTests.Core\Inflow.Core.IntegrationTests.Core.csproj", "{B62CD61F-56B4-4041-982C-860ED0AD71EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{055501BC-3350-4B93-8714-6C2EB9946B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{055501BC-3350-4B93-8714-6C2EB9946B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{055501BC-3350-4B93-8714-6C2EB9946B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62CD61F-56B4-4041-982C-860ED0AD71EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62CD61F-56B4-4041-982C-860ED0AD71EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62CD61F-56B4-4041-982C-860ED0AD71EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62CD61F-56B4-4041-982C-860ED0AD71EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,16 @@
+{
+  "DbmsSettings": {
+    "Dbms": [
+      {
+        "DbConnectionString": "Host=localhost;Port=5432;Database=TestInflow;Username=postgres;Password=123;",
+        "SqlOptionsName": "PostgreSqlOptions",
+        "PathToDumbOrBackup": "../SQL-scripts/testdb-postgre.sql"
+      },
+      {
+        "DbConnectionString": "Data Source=localhost,1433;Initial Catalog=TestInflow;User id=SA;Password=123qWerty!;MultipleActiveResultSets=True;Pooling=true;Max Pool Size=100",
+        "SqlOptionsName": "SqlServerOptions",
+        "PathToDumbOrBackup": "../SQL-scripts/testdb-mssqlserver.bak"
+      }
+    ]
+  }
+}

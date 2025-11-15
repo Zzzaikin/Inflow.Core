@@ -1,10 +1,10 @@
-﻿using Inflow.Core.Data;
+﻿using Inflow.Core.Data.Options;
 using Inflow.Core.Data.Schema;
-using Inflow.Core.Data.Options;
-using InflowDataQuery = Inflow.Core.Data.Query;
+using Microsoft.Extensions.DependencyInjection;
 using SqlKata.Execution;
+using InflowDataQuery = Inflow.Core.Data.Query;
 
-namespace Inflow.Core.DataService.Extensions;
+namespace Inflow.Core.Data.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -54,7 +54,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection.AddSingleton<ISchema>(serviceProvider =>
         {
             var databaseProvider = serviceProvider.GetRequiredService<QueryFactory>();
-            return new Schema(databaseProvider);
+            return new Schema.Schema(databaseProvider);
         });
     }
 }

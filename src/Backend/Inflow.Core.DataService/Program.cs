@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Localization;
-using Inflow.Core.DataService.Extensions;
+using Inflow.Core.Data.Extensions;
 using Inflow.Core.Data.Options;
 using Inflow.Core.DataService.Middlewares;
+using Microsoft.AspNetCore.Localization;
 
 namespace Inflow.Core.DataService;
 
@@ -18,10 +18,8 @@ public class Program
             .Configure<Configuration>(builder.Configuration)
             .AddLocalization(options => options.ResourcesPath = "Resources")
             .AddSingletonSqlOptions(
-                builder.Configuration.GetValue<string>("SqlOptionsName") ??
-                throw new InvalidOperationException(),
-                builder.Configuration.GetConnectionString("DbConnectionString") ??
-                throw new InvalidOperationException())
+                builder.Configuration.GetValue<string>("SqlOptionsName")!,
+                builder.Configuration.GetConnectionString("DbConnectionString")!)
             .AddSingletonDatabaseProvider()
             .AddSingletonInflowDataQuery()
             .AddSingletonSqlSchema();          

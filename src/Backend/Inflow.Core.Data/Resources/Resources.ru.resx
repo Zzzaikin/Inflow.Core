@@ -125,4 +125,7 @@
 	<data name="UnknownError" xml:space="preserve">
     <value>Произошла неизвестная ошибка.</value>
   </data>
+	<data name="SqlOptionsAreNotImplemented" xml:space="preserve">
+    <value>SQL-опции {0} не реализованы.</value>
+  </data>
 </root>

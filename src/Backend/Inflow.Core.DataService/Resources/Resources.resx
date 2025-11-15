@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SqlOptionsAreNotImplemented" xml:space="preserve">
-    <value>SQL-options {0} are not implemented.</value>
-  </data>
   <data name="SqlSchemaIsNotImplementedForSqlOptions" xml:space="preserve">
     <value>SQL-schema is not implemented for SQL-options {0}.</value>
   </data>
