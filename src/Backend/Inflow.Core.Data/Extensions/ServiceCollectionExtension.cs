@@ -6,32 +6,32 @@ using InflowDataQuery = Inflow.Core.Data.Query;
 
 namespace Inflow.Core.Data.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class ServiceCollectionExtension
 {
-    public static IServiceCollection AddSingletonInflowDataQuery(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddScopedInflowDataQuery(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddSingleton<IDataQueryable, InflowDataQuery>(serviceProvider =>
+        return serviceCollection.AddScoped<IDataQueryable, InflowDataQuery>(serviceProvider =>
         {
             var databaseProvider = serviceProvider.GetRequiredService<QueryFactory>(); 
             return new InflowDataQuery(databaseProvider);
         });
     }
 
-    public static IServiceCollection AddSingletonDatabaseProvider(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddScopedDatabaseProvider(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddSingleton<QueryFactory>(serviceProvider =>
+        return serviceCollection.AddScoped<QueryFactory>(serviceProvider =>
         {
             var sqlOptions = serviceProvider.GetRequiredService<BaseSqlOptions>();
             return new QueryFactory(sqlOptions.DbConnection, sqlOptions.Compiler);
         });
     }
 
-    public static IServiceCollection AddSingletonSqlOptions(this IServiceCollection serviceCollection,
+    public static IServiceCollection AddScopedSqlOptions(this IServiceCollection serviceCollection,
         string sqlOptionsName, string dbConnectionString)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(sqlOptionsName, nameof(sqlOptionsName));
-        ArgumentException.ThrowIfNullOrWhiteSpace(dbConnectionString, nameof(dbConnectionString));
-        return serviceCollection.AddSingleton<BaseSqlOptions>(_ =>
+        ArgumentException.ThrowIfNullOrWhiteSpace(sqlOptionsName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(dbConnectionString);
+        return serviceCollection.AddScoped<BaseSqlOptions>(_ =>
         {
             switch (sqlOptionsName)
             {

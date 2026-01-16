@@ -118,7 +118,7 @@ public static class SqlKataQueryExtension
 
     private static Dictionary<string, object?> GetTypedData(Dictionary<string, object?> rawData)
     {
-        return rawData.ToDictionary((pair) => pair.Key, object? (pair) => GetTypedValue(pair.Value));
+        return rawData.ToDictionary(pair => pair.Key, object? (pair) => GetTypedValue(pair.Value));
     }
 
     /// <summary>

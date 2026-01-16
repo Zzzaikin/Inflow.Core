@@ -6,5 +6,7 @@ public class Dbms
     
     public required string SqlOptionsName { get; set; }
     
-    public required string PathToDumbOrBackup {get; set; }
+    public required string RelativePathToBackup {get; set; }
+    
+    public required int Timeout { get; set; }
 }

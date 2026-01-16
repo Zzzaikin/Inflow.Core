@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inflow.Core.Common", "Inflo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inflow.Core.Data", "Inflow.Core.Data\Inflow.Core.Data.csproj", "{055501BC-3350-4B93-8714-6C2EB9946B2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflow.Core.Data.IntegrationTests", "Inflow.Core.Data.IntegrationTests\Inflow.Core.Data.IntegrationTests.csproj", "{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflow.Core.IntegrationTests.Data", "Inflow.Core.IntegrationTests.Data\Inflow.Core.IntegrationTests.Data.csproj", "{205D1DC7-138A-42C3-BFD6-AE3283F7E80F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflow.Core.IntegrationTests.Core", "Inflow.Core.IntegrationTests.Core\Inflow.Core.IntegrationTests.Core.csproj", "{B62CD61F-56B4-4041-982C-860ED0AD71EB}"
 EndProject

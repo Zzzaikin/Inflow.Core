@@ -24,7 +24,7 @@ public class Query(QueryFactory databaseProvider) : BaseQuery(databaseProvider)
     [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly")]
     public override async Task<IEnumerable<dynamic>> SelectAsync(SelectDataRequestBody selectDataRequestBody)
     {
-        ArgumentNullException.ThrowIfNull(selectDataRequestBody, nameof(selectDataRequestBody));
+        ArgumentNullException.ThrowIfNull(selectDataRequestBody);
         ArgumentNullException.ThrowIfNull(selectDataRequestBody.ColumnNames, nameof(selectDataRequestBody.ColumnNames));
         return await DatabaseProvider.Query()
             .Select(selectDataRequestBody.ColumnNames.ToArray())

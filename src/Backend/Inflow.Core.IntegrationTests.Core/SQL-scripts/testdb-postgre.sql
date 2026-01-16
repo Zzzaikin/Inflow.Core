@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
+restrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 
 -- Dumped from database version 16.10
 -- Dumped by pg_dump version 16.10
@@ -28,9 +28,9 @@ CREATE DATABASE "TestInflow" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_
 
 ALTER DATABASE "TestInflow" OWNER TO postgres;
 
-\unrestrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
-\connect "TestInflow"
-\restrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
+unrestrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
+connect "TestInflow"
+restrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -180,5 +180,5 @@ ALTER TABLE ONLY public."User"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
+unrestrict PcKViQnULoZbwaHFvJSCirSFojekR26oQDmeKKR58KWVjfx5xfOVzBaEh4gdmhH
 

@@ -1,5 +1,4 @@
 ﻿using Inflow.Core.Data.DTO.DataRequest;
-using SqlKata.Compilers;
 using SqlKata.Execution;
 
 namespace Inflow.Core.Data;
@@ -35,6 +34,7 @@ public abstract class BaseQuery : IDataQueryable
         if (_disposed) return;
         if (disposing)
         {
+            // TODO: Add Dispose async pattern issue into SqlKata.
             DatabaseProvider.Dispose();
             DatabaseProvider = null!;
         }

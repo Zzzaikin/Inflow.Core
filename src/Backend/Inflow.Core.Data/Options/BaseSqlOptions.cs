@@ -1,36 +1,23 @@
-﻿using System.Data;
-using System.Data.Common;
+﻿using System.Data.Common;
 using SqlKata.Compilers;
-using Inflow.Core.Common;
 
 namespace Inflow.Core.Data.Options;
 
-public abstract class BaseSqlOptions 
+public abstract class BaseSqlOptions
 {
     public Compiler Compiler { get; private set; }
 
-    public DbConnection DbConnection { get; private set; }
+    /// <summary>
+    /// Did not dispose there because this is just options. DbConnection dispose in <see cref="BaseQuery"/> through the
+    /// Database provider disposing.
+    /// </summary>
+    public DbConnection DbConnection { get; }
 
     protected BaseSqlOptions(Compiler compiler, DbConnection dbConnection) 
     {
-        ArgumentNullException.ThrowIfNull(compiler, nameof(compiler));
-        ArgumentNullException.ThrowIfNull(dbConnection, nameof(dbConnection));
+        ArgumentNullException.ThrowIfNull(compiler);
+        ArgumentNullException.ThrowIfNull(dbConnection);
         Compiler = compiler;
         DbConnection = dbConnection;
-    }
-
-    ~BaseSqlOptions() 
-    {
-        CloseConnectionIfOpened();
-    }
-
-    public void OpenConnectionIfClosed()
-    {
-        if (DbConnection.State == ConnectionState.Closed) DbConnection.Open();
-    }
-
-    private void CloseConnectionIfOpened()
-    {
-        if (DbConnection.State == ConnectionState.Open) DbConnection.Close();
     }
 }

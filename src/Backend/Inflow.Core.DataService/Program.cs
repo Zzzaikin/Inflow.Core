@@ -17,11 +17,11 @@ public class Program
             .AddSwaggerGen()
             .Configure<Configuration>(builder.Configuration)
             .AddLocalization(options => options.ResourcesPath = "Resources")
-            .AddSingletonSqlOptions(
+            .AddScopedSqlOptions(
                 builder.Configuration.GetValue<string>("SqlOptionsName")!,
                 builder.Configuration.GetConnectionString("DbConnectionString")!)
-            .AddSingletonDatabaseProvider()
-            .AddSingletonInflowDataQuery()
+            .AddScopedDatabaseProvider()
+            .AddScopedInflowDataQuery()
             .AddSingletonSqlSchema();          
 
         var app = builder.Build();
@@ -53,11 +53,6 @@ public class Program
             .UseHttpsRedirection()
             .UseAuthorization();
         app.MapControllers();
-
-        var sqlOptions = app.Services.GetService<BaseSqlOptions>();
-        if (sqlOptions is null) throw new InvalidOperationException();
-        sqlOptions.OpenConnectionIfClosed();
-
         app.Run();
     }
 }
