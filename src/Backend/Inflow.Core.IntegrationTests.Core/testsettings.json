@@ -6,12 +6,6 @@
         "SqlOptionsName": "PostgreSqlOptions",
         "RelativePathToBackup": "SQL-scripts/testdb-postgre.sql",
         "Timeout": 720
-      },
-      {
-        "DbConnectionString": "Data Source=localhost,1433;Initial Catalog=TestInflow;User id=SA;Password=123qWerty!;MultipleActiveResultSets=True;Pooling=true;Max Pool Size=100",
-        "SqlOptionsName": "SqlServerOptions",
-        "RelativePathToBackup": "SQL-scripts/testdb-mssqlserver.bak",
-        "Timeout": 720
       }
     ]
   }

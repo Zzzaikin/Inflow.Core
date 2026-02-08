@@ -10,29 +10,29 @@ using NUnit.Framework;
 
 namespace Inflow.Core.IntegrationTests.Core;
 
-[SetUpFixture]
 public class TestDatabaseSetup
 {
-    private IEnumerable<Dbms> _dbmss = Enumerable.Empty<Dbms>();
-
+    private IEnumerable<Dbms> _dbmss = [];
     private static IHost? _host;
+
     public static IConfiguration Configuration { get; private set; } = default!;
     public static List<IServiceProvider> DatabaseServiceProvidersPerDbms { get; private set; } = [];
     public static IServiceProvider ServiceProvider { get; private set; } = default!;
 
     [OneTimeSetUp]
-    public async Task GlobalSetUp()
+    public virtual async Task SetUp()
     {
         SetupHost();
         InitConfiguration();
         SetupDiContainersForDbmss();
         var cts = new CancellationTokenSource();
         var prepareDbTasks = PrepareDatabasesAsync(cts);
+        //TODO: Add Error handling and logging. Now there is only operation canceled if some problem occurs.
         await Task.WhenAll(prepareDbTasks).WaitAsync(cts.Token).ConfigureAwait(false);
     }
 
     [OneTimeTearDown]
-    public async Task GlobalTearDown()
+    public virtual async Task TearDown()
     {
         // TODO: Clear the databases after all tests have run. Implement ITestDatabaseCleaner and execute it here.
         foreach (var databaseServiceProvider in DatabaseServiceProvidersPerDbms)
@@ -121,7 +121,7 @@ public class TestDatabaseSetup
             }
             catch
             {
-                cts.Cancel();
+                await cts.CancelAsync();
                 throw;
             }
         }));

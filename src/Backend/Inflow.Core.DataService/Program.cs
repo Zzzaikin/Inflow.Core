@@ -1,5 +1,4 @@
 using Inflow.Core.Data.Extensions;
-using Inflow.Core.Data.Options;
 using Inflow.Core.DataService.Middlewares;
 using Microsoft.AspNetCore.Localization;
 
