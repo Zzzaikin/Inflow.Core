@@ -1,4 +1,4 @@
-using SqlKata;
+using System.Diagnostics;
 using SqlKata.Execution;
 
 namespace Inflow.Core.IntegrationTests.Core.Database;
@@ -24,8 +24,38 @@ internal class PostgreSqlTestDatabasePreparer : ITestDatabasePreparer
     public async Task PrepareAsync(string pathToDumbOrBackup, CancellationToken ct)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(pathToDumbOrBackup);
-        var dumb = await File.ReadAllTextAsync(pathToDumbOrBackup, ct);
-        var query = new Query().FromRaw(dumb);
-        await DatabaseProvider.ExecuteAsync(query, transaction: null, Timeout, ct).ConfigureAwait(false);
+
+        var connectionParams = DatabaseProvider.Connection.ConnectionString.Split(';');
+        var username = connectionParams.FirstOrDefault(x => x.StartsWith("Username="))?.Split('=')[1]
+                       ?? throw new InvalidOperationException("Cannot determine database user from connection string");
+
+        var processInfo = new ProcessStartInfo
+        {
+            FileName = "psql",
+            Arguments = $"--dbname={DatabaseProvider.Connection.Database} --file=\"{pathToDumbOrBackup}\"" + 
+            $" -U {username} -h localhost -p 5432",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+
+        /* 
+         * Explore the options for executing directly via Npgsql so that all authentication methods and 
+         * connection string parameters are supported.
+         */
+        var password = connectionParams.FirstOrDefault(x => x.StartsWith("Password="))?.Split('=')[1]
+                   ?? throw new InvalidOperationException("Cannot determine database password from connection string"); 
+        processInfo.EnvironmentVariables.Add("PGPASSWORD", password);
+
+        using var process = Process.Start(processInfo) 
+            ?? throw new InvalidOperationException("Failed to start pg_restore process");
+        
+        await process.WaitForExitAsync(ct).ConfigureAwait(false);
+        if (process.ExitCode != 0)
+        {
+            var error = await process.StandardError.ReadToEndAsync(ct).ConfigureAwait(false);
+            throw new InvalidOperationException($"pg_restore failed: {error}");
+        }
     }
 }
