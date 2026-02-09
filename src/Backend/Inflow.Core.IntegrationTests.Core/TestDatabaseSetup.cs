@@ -17,7 +17,6 @@ public class TestDatabaseSetup
 
     public static IConfiguration Configuration { get; private set; } = default!;
     public static List<IServiceProvider> DatabaseServiceProvidersPerDbms { get; private set; } = [];
-    public static IServiceProvider ServiceProvider { get; private set; } = default!;
 
     [OneTimeSetUp]
     public virtual async Task SetUp()
@@ -85,8 +84,7 @@ public class TestDatabaseSetup
             })
             .Build();
 
-        ServiceProvider = _host.Services;
-        Configuration = ServiceProvider.GetRequiredService<IConfiguration>();
+        Configuration = _host.Services.GetRequiredService<IConfiguration>();
     }
 
     private void SetupDiContainersForDbmss()
@@ -99,10 +97,10 @@ public class TestDatabaseSetup
 
             services
                 .AddSingleton(Configuration)
-                .AddScopedSqlOptions(sqlOptionsName, dbms.DbConnectionString)
-                .AddScopedDatabaseProvider()
-                .AddScopedInflowDataQuery()
-                .AddTransientTestDatabasePreparer(sqlOptionsName, dbms.Timeout);
+                .AddTransientSqlOptions(sqlOptionsName, dbms.DbConnectionString)
+                .AddTransientDatabaseProvider()
+                .AddTransientInflowDataQuery()
+                .AddSingletonTestDatabasePreparer(sqlOptionsName, dbms.Timeout);
 
             var serviceProvider = services.BuildServiceProvider();
             DatabaseServiceProvidersPerDbms.Add(serviceProvider);
@@ -119,7 +117,7 @@ public class TestDatabaseSetup
              * TODO: Implement database preparation directly via Npgsql so that all authentication methods
              * and connection string parameters are supported.
              */
-            var dataPreparer = ServiceProvider.GetRequiredService<ITestDatabasePreparer>();
+            var dataPreparer = serviceProvider.GetRequiredService<ITestDatabasePreparer>();
             var dbms = _dbmss.First(db => db.SqlOptionsName == dataPreparer.SqlOptionName);
             var pathToDumbOrBackup = Path.Combine(AppContext.BaseDirectory, dbms.RelativePathToBackup);
             await dataPreparer.PrepareAsync(pathToDumbOrBackup, ct).ConfigureAwait(false);

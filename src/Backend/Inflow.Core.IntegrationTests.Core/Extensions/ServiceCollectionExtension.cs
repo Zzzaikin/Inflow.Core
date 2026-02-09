@@ -7,7 +7,7 @@ namespace Inflow.Core.IntegrationTests.Core.Extensions;
 
 public static class ServiceCollectionExtension
 {
-    public static IServiceCollection AddTransientTestDatabasePreparer(this IServiceCollection serviceCollection, 
+    public static IServiceCollection AddSingletonTestDatabasePreparer(this IServiceCollection serviceCollection, 
         string sqlOptionsName, int timeout)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sqlOptionsName);
@@ -15,10 +15,14 @@ public static class ServiceCollectionExtension
         switch (sqlOptionsName)
         {
             case nameof(SqlServerOptions):
-                return serviceCollection.AddTransient<ITestDatabasePreparer, MsSqlTestDatabasePreparer>(
-                    _ => new MsSqlTestDatabasePreparer(sqlOptionsName, timeout));
+                return serviceCollection.AddSingleton<ITestDatabasePreparer, MsSqlTestDatabasePreparer>(
+                    serviceProvider =>
+                    {
+                        var query = serviceProvider.GetRequiredService<QueryFactory>();
+                        return new MsSqlTestDatabasePreparer(query, sqlOptionsName, timeout);
+                    });
             case nameof(PostgreSqlOptions):
-                return serviceCollection.AddTransient<ITestDatabasePreparer, PostgreSqlTestDatabasePreparer>(
+                return serviceCollection.AddSingleton<ITestDatabasePreparer, PostgreSqlTestDatabasePreparer>(
                     serviceProvider =>
                     {
                         var query = serviceProvider.GetRequiredService<QueryFactory>();

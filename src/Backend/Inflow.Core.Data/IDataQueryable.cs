@@ -5,7 +5,7 @@ namespace Inflow.Core.Data;
 
 public interface IDataQueryable : IDisposable
 {
-    QueryFactory  DatabaseProvider { get; }
+    QueryFactory DatabaseProvider { get; }
     
     Task<int> DeleteAsync(DeleteDataRequestBody deleteDataRequestBody);
 

@@ -6,9 +6,7 @@ namespace Inflow.Core.IntegrationTests.Core.Database;
 internal class PostgreSqlTestDatabasePreparer : ITestDatabasePreparer
 {
     public QueryFactory DatabaseProvider { get; }
-    
     public int Timeout { get; }
-    
     public string SqlOptionName { get; }
 
     public PostgreSqlTestDatabasePreparer(QueryFactory databaseProvider, string sqlOptionName, int timeout)
