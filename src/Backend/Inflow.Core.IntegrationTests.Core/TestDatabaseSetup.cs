@@ -26,9 +26,17 @@ public class TestDatabaseSetup
         InitConfiguration();
         SetupDiContainersForDbmss();
         var cts = new CancellationTokenSource();
-        var prepareDbTasks = PrepareDatabasesAsync(cts);
+        var prepareDbTasks = PrepareDatabasesAsync(cts.Token);
         //TODO: Add Error handling and logging. Now there is only operation canceled if some problem occurs.
-        await Task.WhenAll(prepareDbTasks).WaitAsync(cts.Token).ConfigureAwait(false);
+        try
+        {
+            await Task.WhenAll(prepareDbTasks).WaitAsync(cts.Token).ConfigureAwait(false);
+        }
+        catch
+        {
+            await cts.CancelAsync();
+            throw;
+        }
     }
 
     [OneTimeTearDown]
@@ -101,29 +109,20 @@ public class TestDatabaseSetup
         }
     }
 
-    private IEnumerable<Task> PrepareDatabasesAsync(CancellationTokenSource cts)
+    private IEnumerable<Task> PrepareDatabasesAsync(CancellationToken ct)
     {
         return DatabaseServiceProvidersPerDbms.Select(serviceProvider => Task.Run(async () =>
         {
-            try
-            {
-                using var scope = serviceProvider.CreateScope();
-                /* 
-                 * There is opening new connection to db. Now it's redudant, but later it will be used for 
-                 * implementation with Npgsql (now ProcessStartInfo - see dataPreparer.PrepareAsync).
-                 * TODO: Implement database preparation directly via Npgsql so that all authentication methods 
-                 * and connection string parameters are supported.
-                 */
-                var dataPreparer = scope.ServiceProvider.GetRequiredService<ITestDatabasePreparer>();
-                var dbms = _dbmss.First(db => db.SqlOptionsName == dataPreparer.SqlOptionName);
-                var pathToDumbOrBackup = Path.Combine(AppContext.BaseDirectory, dbms.RelativePathToBackup);
-                await dataPreparer.PrepareAsync(pathToDumbOrBackup, cts.Token).ConfigureAwait(false);
-            }
-            catch
-            {
-                await cts.CancelAsync();
-                throw;
-            }
+            /*
+             * There is opening new connection to db. Now it's redudant, but later it will be used for
+             * implementation with Npgsql (now ProcessStartInfo - see dataPreparer.PrepareAsync).
+             * TODO: Implement database preparation directly via Npgsql so that all authentication methods
+             * and connection string parameters are supported.
+             */
+            var dataPreparer = ServiceProvider.GetRequiredService<ITestDatabasePreparer>();
+            var dbms = _dbmss.First(db => db.SqlOptionsName == dataPreparer.SqlOptionName);
+            var pathToDumbOrBackup = Path.Combine(AppContext.BaseDirectory, dbms.RelativePathToBackup);
+            await dataPreparer.PrepareAsync(pathToDumbOrBackup, ct).ConfigureAwait(false);
         }));
     }
 }
